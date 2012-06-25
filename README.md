@@ -1,1 +1,1 @@
-logy - is a DSL-based Java logging librarys
+logy - is a DSL-based Java logging library.
