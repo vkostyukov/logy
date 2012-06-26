@@ -18,6 +18,18 @@
 
 package logy.context;
 
+import logy.Logy.*;
+import logy.logger.*;
+
 public interface Context {
+
+	public static final String DEFAULT_FORMAT = 
+		"%date %time %package%.%class%:%method% [%level%] :: %%%";
+	public static final Level DEFAULT_LEVEL = Level.INFO;
+	public static final Logger DEFAULT_LOGGER = new StreamLogger(System.out);
+
+	public String format(String scope);
+	public Level level(String scope);
+	public Logger logger(String scope);
 
 }

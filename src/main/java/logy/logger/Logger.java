@@ -20,4 +20,8 @@ package logy.logger;
 
 public interface Logger {
 
+	public void log(Object obj);
+
+	public void newline();
+
 }

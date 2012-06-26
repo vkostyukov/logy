@@ -18,6 +18,23 @@
 
 package logy.logger;
 
-public class StreamLogger {
+import java.io.*;
 
+public class StreamLogger implements Logger {
+
+	private PrintStream stream;
+
+	public StreamLogger(PrintStream stream) {
+		this.stream = stream;
+	}
+
+	@Override
+	public void log(Object obj) {
+		stream.print(obj.toString());
+	}
+
+	@Override
+	public void newline() {
+		stream.println();
+	}
 }

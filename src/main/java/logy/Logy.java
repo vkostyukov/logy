@@ -18,47 +18,62 @@
 
 package logy;
 
-public class Logy {
+import logy.context.*;
+import logy.parser.*;
+import logy.logger.*;
 
-	private static final int LEVEL_DEBUG = 0;
-	private static final int LEVEL_ERROR = 1;
-	private static final int LEVEL_WARN = 2;
-	private static final int LEVEL_INFO = 3;
-	private static final int LEVEL_FINE = 4;
+public final class Logy {
 	
+	public static enum Level {
+		NONE, DEBUG, ERROR, WARN, INFO, FINE, DEFAULT
+	}
+	
+	private static Context context = new LogyParser().parse();
+
 	public static void dump(Object ... objs) {
-		log(LEVEL_DEBUG, export(objs));
+		log(Level.DEBUG, export(objs));
 	}
 	
 	public static void debug(Object ... objs) {
-		log(LEVEL_DEBUG, objs);
+		log(Level.DEBUG, objs);
 	}
 	
 	public static void error(Object ... objs) {
-		log(LEVEL_ERROR, objs);
+		log(Level.ERROR, objs);
 	}
 	
 	public static void warn(Object ... objs) {
-		log(LEVEL_WARN, objs);
+		log(Level.WARN, objs);
 	}
 	
 	public static void info(Object ... objs) {
-		log(LEVEL_INFO, objs);
+		log(Level.INFO, objs);
 	}
 	
 	public static void fine(Object ... objs) {
-		log(LEVEL_FINE, objs);
+		log(Level.FINE, objs);
 	}
 	
 	public static void log(Object ... objs) {
-		
+		log(Level.DEFAULT, objs);
 	}
 	
-	private static void log(int level, Object ... objs) {
+	private static void log(Level level, Object ... objs) {
+
+		Logger logger = context.logger(scope());
+		for (Object obj: objs) {
+			logger.log(obj);
+		}
+		logger.newline();
 		
+		//Level level = context.level(scope());
 	}
 	
 	public static String export(Object ... objs) {
+		return "";
+	}
+	
+	private static String scope() {
 		return "";
 	}
 }
