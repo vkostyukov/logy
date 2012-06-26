@@ -18,6 +18,23 @@
 
 package logy.env;
 
-public class HashEnvironment {
+import logy.Logy.Level;
+import logy.logger.*;
 
+public class HashEnvironment implements Environment {
+
+	@Override
+	public String format(String scope) {
+		return DEFAULT_FORMAT;
+	}
+
+	@Override
+	public Level level(String scope) {
+		return DEFAULT_LEVEL;
+	}
+
+	@Override
+	public Logger logger(String scope) {
+		return DEFAULT_LOGGER;
+	}
 }

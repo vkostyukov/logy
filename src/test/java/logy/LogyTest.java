@@ -16,16 +16,29 @@
  * limitations under the License.
  */
 
-package logy.parser;
+package logy;
 
-import logy.env.*;
+import static logy.Logy.*;
+import junit.framework.*;
 
-public class LogyParser implements Parser {
+public class LogyTest extends TestCase {
 
-	@Override
-	public Environment parse() {
-		return new HashEnvironment(); 
+	public static class Item {
+
+		@Override
+		public String toString() {
+			return "item";
+		}
 	}
 	
+	public static Test suite() {
+		return new TestSuite(LogyTest.class);
+	}
 
+	public void testDebug() {
+
+		String a[] = {"a", "b"};
+		
+		info("Can't find", quote(upper("test")), "in array", new int[]{1, 2, 3, 4});
+	}
 }
