@@ -18,12 +18,12 @@
 
 package logy.parser;
 
-import logy.context.*;
+import logy.env.*;
 
 public interface Parser {
 
 	public static final String DEFAULT_FILENAME = "properties.logy";
 
-	public Context parse();
+	public Environment parse();
 
 }

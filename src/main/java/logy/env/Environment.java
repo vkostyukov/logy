@@ -16,15 +16,15 @@
  * limitations under the License.
  */
 
-package logy.context;
+package logy.env;
 
 import logy.Logy.*;
 import logy.logger.*;
 
-public interface Context {
+public interface Environment {
 
 	public static final String DEFAULT_FORMAT = 
-		"%date %time %package%.%class%:%method% [%level%] :: %%%";
+		"%date% %time% %package%.%class%:%method% [%level%] :: %%%";
 	public static final Level DEFAULT_LEVEL = Level.INFO;
 	public static final Logger DEFAULT_LOGGER = new StreamLogger(System.out);
 

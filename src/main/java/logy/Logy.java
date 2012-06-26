@@ -18,9 +18,11 @@
 
 package logy;
 
-import logy.context.*;
-import logy.parser.*;
+import java.util.*;
+
+import logy.env.*;
 import logy.logger.*;
+import logy.parser.*;
 
 public final class Logy {
 	
@@ -28,7 +30,7 @@ public final class Logy {
 		NONE, DEBUG, ERROR, WARN, INFO, FINE, DEFAULT
 	}
 	
-	private static Context context = new LogyParser().parse();
+	private static Environment env = new LogyParser().parse();
 
 	public static void dump(Object ... objs) {
 		log(Level.DEBUG, export(objs));
@@ -60,13 +62,25 @@ public final class Logy {
 	
 	private static void log(Level level, Object ... objs) {
 
-		Logger logger = context.logger(scope());
+		String scope = scope();
+
+		if (level == Level.DEFAULT) {
+			level = env.level(scope);
+		}
+
+		if (level.ordinal() < env.level(scope).ordinal()) {
+			return;
+		}
+
+		Map<String, String> context = context();
+		String format = env.format(scope);
+
+		Logger logger = env.logger(scope);
 		for (Object obj: objs) {
-			logger.log(obj);
+			logger.log(obj, format, context);
 		}
 		logger.newline();
-		
-		//Level level = context.level(scope());
+
 	}
 	
 	public static String export(Object ... objs) {
@@ -74,6 +88,11 @@ public final class Logy {
 	}
 	
 	private static String scope() {
+//		Thread.currentThread().getS
 		return "";
+	}
+	
+	private static Map<String, String> context() {
+		return null;
 	}
 }

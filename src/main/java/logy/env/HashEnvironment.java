@@ -16,8 +16,8 @@
  * limitations under the License.
  */
 
-package logy.context;
+package logy.env;
 
-public class HashContext {
+public class HashEnvironment {
 
 }

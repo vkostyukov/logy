@@ -18,12 +18,12 @@
 
 package logy.parser;
 
-import logy.context.*;
+import logy.env.*;
 
 public class LogyParser implements Parser {
 
 	@Override
-	public Context parse() {
+	public Environment parse() {
 		// TODO Auto-generated method stub
 		return null;
 	}

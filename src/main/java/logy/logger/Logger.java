@@ -18,9 +18,11 @@
 
 package logy.logger;
 
+import java.util.*;
+
 public interface Logger {
 
-	public void log(Object obj);
+	public void log(Object obj, String format, Map<String, String> context);
 
 	public void newline();
 

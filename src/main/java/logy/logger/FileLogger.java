@@ -18,17 +18,16 @@
 
 package logy.logger;
 
+import java.util.*;
+
+
 public class FileLogger implements Logger {
 
 	@Override
-	public void log(Object obj) {
-		// TODO Auto-generated method stub
-		
+	public void log(Object obj, String format, Map<String, String> context) {
 	}
 
 	@Override
 	public void newline() {
-		// TODO Auto-generated method stub
-		
 	}
 }
