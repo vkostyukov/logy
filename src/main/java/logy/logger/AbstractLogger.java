@@ -20,12 +20,18 @@ package logy.logger;
 
 import java.util.*;
 
-public interface Logger {
+public abstract class AbstractLogger implements Logger {
 
-	public void log(Object obj);
+	@Override
+	public void log(Object obj, String format, Map<String, String> context) {
 
-	public void log(Object obj, String format, Map<String, String> context);
+		String message = format;
 
-	public void newline();
+		for (String pattern: context.keySet()) {
+			message = message.replaceAll("%" + pattern + "%", 
+				context.get(pattern));
+		}
 
+		log(message.replaceAll("%%%", obj.toString()));
+	}
 }

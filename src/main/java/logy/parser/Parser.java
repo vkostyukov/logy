@@ -18,12 +18,14 @@
 
 package logy.parser;
 
+import java.io.*;
+
 import logy.env.*;
 
 public interface Parser {
 
 	public static final String DEFAULT_FILENAME = "properties.logy";
 
-	public Environment parse();
+	public Environment parse(File file);
 
 }

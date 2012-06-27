@@ -18,14 +18,19 @@
 
 package logy.parser;
 
+import java.io.*;
+import java.util.*;
+
 import logy.env.*;
 
 public class LogyParser implements Parser {
 
 	@Override
-	public Environment parse() {
-		return new HashEnvironment(); 
+	public Environment parse(File file) {
+		
+		Map<String, String> content = new HashMap<String, String>();
+		
+		return Environment.create(content); 
 	}
-	
 
 }

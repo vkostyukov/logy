@@ -18,8 +18,10 @@
 
 package logy;
 
+import java.io.*;
 import java.text.*;
 import java.util.*;
+import java.util.regex.*;
 
 import logy.env.*;
 import logy.logger.*;
@@ -45,7 +47,8 @@ public final class Logy {
 		}
 	}
 
-	private static Environment env = new LogyParser().parse();
+	private static Environment env = 
+		new LogyParser().parse(new File(Parser.DEFAULT_FILENAME));
 
 	public static Object join(Object ... objs) {
 		StringBuilder joiner = new StringBuilder();
@@ -175,24 +178,19 @@ public final class Logy {
 	
 	static String scope() {
 		StackTraceElement[] stack = Thread.currentThread().getStackTrace();
-		return stack[3].getClassName() + "." + stack[3].getMethodName();
+		return stack[4].getClassName() + "." + stack[4].getMethodName();
 	}
 	
 	static Map<String, String> context(String scope) {
 		Map<String, String> result = new HashMap<String, String>();
 		result.put("scope", scope);
 
-		// TODO: I have to use regular expressions here!
-		String parts[] = scope.split("\\.");
-		result.put("method", parts[parts.length - 1]);
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < parts.length - 1; i++) {
-			sb.append(parts[i]);
-			if (i != parts.length - 2) {
-				sb.append(".");
-			}
-		}
-		result.put("class", sb.toString());
+		Pattern pattern = Pattern.compile("^(.*)\\.([^\\.]*)$");
+		Matcher matcher = pattern.matcher(scope);
+
+		assert matcher.find(): matcher;
+		result.put("class", matcher.group(1));
+		result.put("method", matcher.group(2));
 
 		Date now = new Date();
 		DateFormat df = DateFormat.getDateInstance(DateFormat.DEFAULT);

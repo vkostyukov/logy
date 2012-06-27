@@ -18,13 +18,10 @@
 
 package logy.logger;
 
-import java.util.*;
-
-
-public class FileLogger implements Logger {
+public class FileLogger extends AbstractLogger implements Logger {
 
 	@Override
-	public void log(Object obj, String format, Map<String, String> context) {
+	public void log(Object obj) {
 	}
 
 	@Override

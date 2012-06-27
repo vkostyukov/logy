@@ -18,10 +18,18 @@
 
 package logy.env;
 
-import logy.Logy.Level;
+import java.util.*;
+
+import logy.Logy.*;
 import logy.logger.*;
 
-public class HashEnvironment implements Environment {
+public class HashEnvironment extends Environment {
+
+	private Map<String, String> content;
+	
+	public HashEnvironment(Map<String, String> content) {
+		this.content = content;
+	}
 
 	@Override
 	public String format(String scope) {

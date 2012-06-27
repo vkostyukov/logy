@@ -32,8 +32,12 @@ public class LogyTest extends TestCase {
 
 	public void testContextAndScope() {
 		Map<String, String> context = context(scope());
-		assertEquals(context.get("scope"), "sun.reflect.NativeMethodAccessorImpl.invoke0");
+		assertEquals(context.get("scope"), "sun.reflect.NativeMethodAccessorImpl.invoke");
 		assertEquals(context.get("class"), "sun.reflect.NativeMethodAccessorImpl");
-		assertEquals(context.get("method"), "invoke0");
+		assertEquals(context.get("method"), "invoke");
+	}
+
+	public void testLog() {
+		fine("message");
 	}
 }

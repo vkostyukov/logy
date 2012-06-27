@@ -19,9 +19,8 @@
 package logy.logger;
 
 import java.io.*;
-import java.util.*;
 
-public class StreamLogger implements Logger {
+public class StreamLogger extends AbstractLogger implements Logger {
 
 	private PrintStream stream;
 
@@ -30,7 +29,7 @@ public class StreamLogger implements Logger {
 	}
 
 	@Override
-	public void log(Object obj, String format, Map<String, String> context) {
+	public void log(Object obj) {
 		stream.print(obj.toString());
 	}
 

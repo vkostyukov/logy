@@ -18,18 +18,24 @@
 
 package logy.env;
 
-import logy.Logy.*;
+import java.util.*;
+
+import logy.Logy.Level;
 import logy.logger.*;
 
-public interface Environment {
+public abstract class Environment {
 
 	public static final String DEFAULT_FORMAT = 
-		"%date% %time% %package%.%class%:%method% [%level%] :: %%%";
+		"%date% %time% %scope% [%level%] :: %%%";
 	public static final Level DEFAULT_LEVEL = Level.INFO;
 	public static final Logger DEFAULT_LOGGER = new StreamLogger(System.out);
 
-	public String format(String scope);
-	public Level level(String scope);
-	public Logger logger(String scope);
+	public static Environment create(Map<String, String> content) {
+		return new HashEnvironment(content);
+	}
+
+	public abstract String format(String scope);
+	public abstract Level level(String scope);
+	public abstract Logger logger(String scope);
 
 }

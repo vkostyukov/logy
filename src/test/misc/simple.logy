@@ -3,4 +3,6 @@
 # Logy's simple configuration file: https://github.com/vkostyukov/logy
 #
 
-format@=%%%
+level@=debug
+format@=%date% %%%
+logger@=stream:err
