@@ -25,24 +25,22 @@ import logy.logger.*;
 
 public class HashEnvironment extends Environment {
 
-	private Map<String, String> content;
-	
-	public HashEnvironment(Map<String, String> content) {
-		this.content = content;
+	public HashEnvironment(Collection<Environment.Tripple> tripples) {
+
 	}
 
 	@Override
 	public String format(String scope) {
-		return DEFAULT_FORMAT;
+		return "%%%";
 	}
 
 	@Override
 	public Level level(String scope) {
-		return DEFAULT_LEVEL;
+		return Level.INFO;
 	}
 
 	@Override
 	public Logger logger(String scope) {
-		return DEFAULT_LOGGER;
+		return new StreamLogger(System.err);
 	}
 }

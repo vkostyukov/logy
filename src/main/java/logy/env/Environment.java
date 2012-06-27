@@ -25,13 +25,27 @@ import logy.logger.*;
 
 public abstract class Environment {
 
-	public static final String DEFAULT_FORMAT = 
-		"%date% %time% %scope% [%level%] :: %%%";
-	public static final Level DEFAULT_LEVEL = Level.INFO;
-	public static final Logger DEFAULT_LOGGER = new StreamLogger(System.out);
+	public static final class Tripple {
+		public final String scope;
+		public final String key;
+		public final String value;
 
-	public static Environment create(Map<String, String> content) {
-		return new HashEnvironment(content);
+		public Tripple(String scope, String key, String value) {
+			this.scope = scope;
+			this.key = key;
+			this.value = value;
+		}
+	}
+
+	public static final Collection<Environment.Tripple> DEFAULT_TRIPPLES = 
+		Arrays.asList(
+			new Tripple("*", "format", "%date% %time% %scope% [%level%]: %%%"),
+			new Tripple("*", "level", "info"),
+			new Tripple("*", "logger", "stream:out")
+		);
+
+	public static Environment create(Collection<Environment.Tripple> tripples) {
+		return new HashEnvironment(tripples);
 	}
 
 	public abstract String format(String scope);

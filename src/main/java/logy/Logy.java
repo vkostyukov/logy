@@ -47,8 +47,8 @@ public final class Logy {
 		}
 	}
 
-	private static Environment env = 
-		new LogyParser().parse(new File(Parser.DEFAULT_FILENAME));
+	private static Environment env = Environment.create(
+		new LogyParser().parse(new File(Parser.DEFAULT_FILENAME)));
 
 	public static Object join(Object ... objs) {
 		StringBuilder joiner = new StringBuilder();

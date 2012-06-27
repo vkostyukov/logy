@@ -19,6 +19,7 @@
 package logy.parser;
 
 import java.io.*;
+import java.util.*;
 
 import logy.env.*;
 
@@ -26,6 +27,6 @@ public interface Parser {
 
 	public static final String DEFAULT_FILENAME = "properties.logy";
 
-	public Environment parse(File file);
+	public Collection<Environment.Tripple> parse(File file);
 
 }

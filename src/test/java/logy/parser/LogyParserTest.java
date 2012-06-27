@@ -20,6 +20,7 @@ package logy.parser;
 
 import java.io.*;
 import java.net.*;
+import java.util.*;
 
 import junit.framework.*;
 import logy.env.*;
@@ -35,6 +36,8 @@ public class LogyParserTest extends TestCase {
 
 	public void testOne() {
 		Parser parser = new LogyParser();
-		Environment env = parser.parse(new File(URLS[0].toString()));
+		Collection<Environment.Tripple> tripples = 
+			parser.parse(new File(URLS[0].getPath()));
+		
 	}
 }

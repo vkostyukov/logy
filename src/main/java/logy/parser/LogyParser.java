@@ -20,17 +20,43 @@ package logy.parser;
 
 import java.io.*;
 import java.util.*;
+import java.util.regex.*;
 
 import logy.env.*;
 
 public class LogyParser implements Parser {
 
+	public static final Pattern TRIPPLE = Pattern.compile("(.+)@(.*)=(.+)");
+
 	@Override
-	public Environment parse(File file) {
-		
-		Map<String, String> content = new HashMap<String, String>();
-		
-		return Environment.create(content); 
+	public Collection<Environment.Tripple> parse(File file) {
+
+		List<Environment.Tripple> tripples = 
+			new ArrayList<Environment.Tripple>();
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(file));
+			while (reader.ready()) {
+				String line = reader.readLine();
+
+				if (line.matches("^#.*")) {
+					continue;
+				}
+
+				Matcher matcher = TRIPPLE.matcher(line);
+				if (matcher.matches()) {
+					String scope = matcher.group(2).isEmpty() ? "*" :
+						matcher.group(2);
+					tripples.add(new Environment.Tripple(
+						scope, matcher.group(1), matcher.group(3)));
+				} else {
+					throw new IOException("Bad config file format!");
+				}
+			}
+		} catch (IOException ignored) {
+			return Environment.DEFAULT_TRIPPLES;
+		}
+
+		return tripples;
 	}
 
 }
