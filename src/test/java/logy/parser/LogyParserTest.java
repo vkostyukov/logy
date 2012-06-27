@@ -16,24 +16,10 @@
  * limitations under the License.
  */
 
-package logy;
-
-import static logy.Logy.*;
-
-import java.util.*;
+package logy.parser;
 
 import junit.framework.*;
 
-public class LogyTest extends TestCase {
+public class LogyParserTest extends TestCase {
 
-	public static Test suite() {
-		return new TestSuite(LogyTest.class);
-	}
-
-	public void testContextAndScope() {
-		Map<String, String> context = context(scope());
-		assertEquals(context.get("scope"), "sun.reflect.NativeMethodAccessorImpl.invoke0");
-		assertEquals(context.get("class"), "sun.reflect.NativeMethodAccessorImpl");
-		assertEquals(context.get("method"), "invoke0");
-	}
 }

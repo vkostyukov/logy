@@ -18,6 +18,7 @@
 
 package logy;
 
+import java.text.*;
 import java.util.*;
 
 import logy.env.*;
@@ -30,11 +31,11 @@ public final class Logy {
 		NONE, DEBUG, ERROR, WARN, INFO, FINE, DEFAULT
 	}
 
-	private static class Intrusive {
+	private static class IntrusiveObject {
 		
 		private Object obj;
 		
-		public Intrusive(Object obj) {
+		public IntrusiveObject(Object obj) {
 			this.obj = obj;
 		}
 
@@ -55,9 +56,23 @@ public final class Logy {
 		joiner.delete(joiner.length() - 1, joiner.length());
 		return joiner.toString();
 	}
-	
+
+	public static Object group(Object ... objs) {
+		if (objs instanceof IntrusiveObject[]) {
+			Object result[] = new Object[objs.length];
+			for (int i = 0; i < objs.length; i++) {
+				result[i] = objs[i].toString();
+			}
+			return result;
+		} else {
+			return objs;
+		}
+	}
+
 	private static String fetch(Object obj) {
-		if (obj instanceof Intrusive[]) {
+		if (obj == null) {
+			return "null";
+		} else if (obj instanceof IntrusiveObject[]) {
 			return join(scalar(obj)).toString();
 		} else if (obj instanceof int[]) {
 			return Arrays.toString((int[]) obj);
@@ -81,37 +96,37 @@ public final class Logy {
 	}
 
 	public static Object[] upper(Object ... objs) {
-		Intrusive result[] = new Intrusive[objs.length];
+		IntrusiveObject result[] = new IntrusiveObject[objs.length];
 		for (int i = 0; i < result.length; i++) {
-			result[i] = new Intrusive(fetch(objs[i]).toUpperCase());
+			result[i] = new IntrusiveObject(fetch(objs[i]).toUpperCase());
 		}
 		return result;
 	}
-	
+
 	public static Object[] lower(Object ... objs) {
-		Intrusive result[] = new Intrusive[objs.length];
+		IntrusiveObject result[] = new IntrusiveObject[objs.length];
 		for (int i = 0; i < result.length; i++) {
-			result[i] = new Intrusive(fetch(objs[i]).toLowerCase());
+			result[i] = new IntrusiveObject(fetch(objs[i]).toLowerCase());
 		}
 		return result;
 	}
-	
+
 	public static Object[] quote(Object ... objs) {
-		Intrusive result[] = new Intrusive[objs.length];
+		IntrusiveObject result[] = new IntrusiveObject[objs.length];
 		for (int i = 0; i < result.length; i++) {
-			result[i] = new Intrusive("\"" + fetch(objs[i]) + "\"");
+			result[i] = new IntrusiveObject("\"" + fetch(objs[i]) + "\"");
 		}
 		return result;
 	}
-	
+
 	public static Object[] scalar(Object obj) {
 		return (Object[]) obj;
 	}
-	
+
 	public static Object array(Object obj[]) {
 		return (Object) obj;
 	}
-	
+
 	public static void debug(Object ... objs) {
 		log(Level.DEBUG, join(objs).toString());
 	}
@@ -158,18 +173,34 @@ public final class Logy {
 		logger.newline();
 	}
 	
-	private static String scope() {
-//		Thread.currentThread().getS
-		return "";
+	static String scope() {
+		StackTraceElement[] stack = Thread.currentThread().getStackTrace();
+		return stack[3].getClassName() + "." + stack[3].getMethodName();
 	}
 	
-	private static Map<String, String> context(String scope) {
+	static Map<String, String> context(String scope) {
+		Map<String, String> result = new HashMap<String, String>();
+		result.put("scope", scope);
 
-		
-		
-		//Locale locale = Locale.forLanguageTag(System.getProperty("user.language"));
-		//new Date
+		// TODO: I have to use regular expressions here!
+		String parts[] = scope.split("\\.");
+		result.put("method", parts[parts.length - 1]);
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < parts.length - 1; i++) {
+			sb.append(parts[i]);
+			if (i != parts.length - 2) {
+				sb.append(".");
+			}
+		}
+		result.put("class", sb.toString());
 
-		return new HashMap<String, String>();
+		Date now = new Date();
+		DateFormat df = DateFormat.getDateInstance(DateFormat.DEFAULT);
+		result.put("date", df.format(now));
+
+		DateFormat tf = DateFormat.getTimeInstance(DateFormat.DEFAULT);
+		result.put("time", tf.format(now));
+
+		return result;
 	}
 }
