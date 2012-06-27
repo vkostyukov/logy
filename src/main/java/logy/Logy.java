@@ -188,9 +188,13 @@ public final class Logy {
 		Pattern pattern = Pattern.compile("^(.*)\\.([^\\.]*)$");
 		Matcher matcher = pattern.matcher(scope);
 
-		assert matcher.find(): matcher;
-		result.put("class", matcher.group(1));
-		result.put("method", matcher.group(2));
+		if (matcher.find()) {
+			result.put("class", matcher.group(1));
+			result.put("method", matcher.group(2));
+		} else {
+			throw new IllegalStateException(
+				"It's impossible to have method w/o a class!");
+		}
 
 		Date now = new Date();
 		DateFormat df = DateFormat.getDateInstance(DateFormat.DEFAULT);

@@ -39,5 +39,6 @@ public class LogyTest extends TestCase {
 
 	public void testLog() {
 		fine("message");
+		info("message2");
 	}
 }
