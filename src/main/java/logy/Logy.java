@@ -64,7 +64,13 @@ public final class Logy {
 			}
 			return result;
 		} else {
-			return objs;
+			List<Object> result = new ArrayList<Object>();
+			for (int i = 0; i < objs.length; i++) {
+				for (Object obj: scalar(objs[i])) {
+					result.add(obj);
+				}
+			}
+			return result.toArray();
 		}
 	}
 

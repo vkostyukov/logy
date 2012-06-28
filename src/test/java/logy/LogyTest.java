@@ -39,11 +39,67 @@ public class LogyTest extends TestCase {
 		assertEquals(context.get("method"), "invoke");
 	}
 
+	public void testExport() {
+		String strArr[] = {"a", "b", "c", "d"};
+		int intArr[] = {1, 2, 3, 4};
+
+		assertEquals(
+			"[\"A\", \"B\", \"C\", \"D\", \"1\", \"2\", \"3\", \"4\"]",
+			export(group(upper(quote(scalar(strArr))), quote(scalar(intArr)))));
+	}
+
+	public void testLower() {
+		String arr[] = {"A", "B", "C"};
+
+		assertEquals("[a, b, c]", export(lower(array(arr))));
+		assertEquals("a b c", export(lower(scalar(arr))));
+		assertEquals("[a, b, c] d e", export(lower(arr, "D", "E")));
+	}
+
+	public void testUpper() {
+		String arr[] = {"a", "b", "c"};
+
+		assertEquals("[A, B, C]", export(upper(array(arr))));
+		assertEquals("A B C", export(upper(scalar(arr))));
+		assertEquals("[A, B, C] D E", export(upper(arr, "D", "E")));
+	}
+
 	public void testQuote() {
 		int arr[] = {1, 2, 3, 4};
-		info("There is no", quote(5), "in array", quote(arr));
-		
+
 		assertEquals("\"[1, 2, 3, 4]\"", export(quote(arr)));
 		assertEquals("\"1\" \"2\" \"3\" \"4\"", export(quote(scalar(arr))));
+		assertEquals("\"\"A\"\" \"\"B\"\" \"\"C\"\" \"\"[1, 2, 3, 4]\"\"", 
+			export(quote(quote("A", "B", "C", arr))));
+	}
+
+	public void testJoin() {
+		String arr[] = {"a", "b", "c", "d"};
+
+		assertEquals("1 2 3 a b c", export(join(1, 2, 3, "a", "b", "c")));
+		assertEquals("a b c d", export(join(scalar(arr))));
+	}
+
+	public void testGroup() {
+		String arr[] = {"a", "b", "c", "d"};
+
+		assertEquals("[1, 2, a, b]", export(group(1, 2, "a", "b")));
+		assertEquals("[a, b, c, d]", export(group(scalar(arr))));
+		assertEquals("[a, b, c, d, a, 1]", export(group(scalar(arr), "a", 1)));
+	}
+
+	public void testScalar() {
+		String arr[] = {"a", "b", "c", "d"};
+
+		assertEquals("a b c d", export(scalar(arr)));
+		assertEquals("1 2 3", export(scalar(new int[] {1, 2, 3})));
+	}
+
+	public void testArray() {
+		String strArr[] = {"a", "b", "c", "d"};
+		int intArr[] = {1, 2, 3, 4};
+
+		assertEquals("[a, b, c, d]", export(array(strArr)));
+		assertEquals("[1, 2, 3, 4]", export(intArr));
 	}
 }
