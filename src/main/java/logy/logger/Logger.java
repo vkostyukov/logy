@@ -35,7 +35,7 @@ public abstract class Logger {
 
 	public static final Level DEFAULT_LEVEL = Level.INFO;
 
-	private static final Pattern PATTERN = Pattern.compile("(\\w+):.*");
+	private static final Pattern PATTERN = Pattern.compile("(\\w+):?.*");
 	
 	public static Logger fromString(String string) {
 		// TODO: I can write it better!

@@ -20,6 +20,6 @@ package logy.parser;
 
 import junit.framework.*;
 
-public class ParserTest extends TestCase {
+public class ParserTest {
 
 }

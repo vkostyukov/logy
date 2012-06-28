@@ -20,42 +20,16 @@ package logy.env;
 
 import java.util.*;
 
-import logy.logger.*;
+import junit.framework.*;
 
-public abstract class Environment {
+public class RegexEnvironmentTest extends EnvironmentTest {
 
-	public static final class Tripple {
-		public final String scope;
-		public final String key;
-		public final String value;
-
-		public Tripple(String scope, String key, String value) {
-			this.scope = scope;
-			this.key = key;
-			this.value = value;
-		}
+	public static Test suite() {
+		return new TestSuite(RegexEnvironmentTest.class);
 	}
 
-	public static Environment fromTripples(
-		Collection<Environment.Tripple> tripples) {
+	@Override
+	public Environment environment(Collection<Environment.Tripple> tripples) {
 		return new RegexEnvironment(tripples);
-	}
-
-	protected Collection<Environment.Tripple> tripples;
-
-	public Environment(Collection<Tripple> tripples) {
-		this.tripples = tripples;
-	}
-
-	public String format(String scope) {
-		return Logger.DEFAULT_FORMAT;
-	}
-
-	public Logger.Level level(String scope) {
-		return Logger.DEFAULT_LEVEL;
-	}
-
-	public Logger logger(String scope) {
-		return Logger.DEFAULT_LOGGER; 
 	}
 }
