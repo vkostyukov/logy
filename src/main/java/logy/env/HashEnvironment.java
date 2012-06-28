@@ -20,27 +20,38 @@ package logy.env;
 
 import java.util.*;
 
-import logy.Logy.*;
 import logy.logger.*;
 
 public class HashEnvironment extends Environment {
 
-	public HashEnvironment(Collection<Environment.Tripple> tripples) {
+	public static final class HashedScope {
+		private final String scope;
 
+		public HashedScope(String scope) {
+			this.scope = scope;
+		}
 	}
+
+	private static final HashEnvironment.HashedScope GLOBAL_SCOPE = new HashedScope("*");
+
+	private Map<HashEnvironment.HashedScope, Logger> loggers;
+	private Map<HashEnvironment.HashedScope, String> formats;
+	private Map<HashEnvironment.HashedScope, Logger.Level> levels;
+
+	public HashEnvironment(Collection<Environment.Tripple> tripples) {
+		super(tripples);
+
+		this.loggers = new HashMap<HashEnvironment.HashedScope, Logger>();
+	}		
 
 	@Override
 	public String format(String scope) {
-		return "%%%";
-	}
-
-	@Override
-	public Level level(String scope) {
-		return Level.INFO;
-	}
-
-	@Override
-	public Logger logger(String scope) {
-		return new StreamLogger(System.err);
+		if (formats.containsKey(new HashedScope(scope))) {
+			return formats.get(scope);
+		} else if (formats.containsKey(GLOBAL_SCOPE)) {
+			return formats.get(GLOBAL_SCOPE);
+		} else {
+			return super.format(scope);
+		}
 	}
 }

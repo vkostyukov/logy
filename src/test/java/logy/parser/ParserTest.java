@@ -16,22 +16,10 @@
  * limitations under the License.
  */
 
-package logy.logger;
+package logy.parser;
 
-import java.util.*;
+import junit.framework.*;
 
-public abstract class AbstractLogger implements Logger {
+public class ParserTest extends TestCase {
 
-	@Override
-	public void log(Object obj, String format, Map<String, String> context) {
-
-		String message = format;
-
-		for (String pattern: context.keySet()) {
-			message = message.replaceAll("%" + pattern + "%", 
-				context.get(pattern));
-		}
-
-		log(message.replaceAll("%%%", obj.toString()));
-	}
 }

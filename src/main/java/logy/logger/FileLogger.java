@@ -18,7 +18,15 @@
 
 package logy.logger;
 
-public class FileLogger extends AbstractLogger implements Logger {
+import java.io.*;
+
+public class FileLogger extends Logger {
+
+	public static final String DEFAULT_FILENAME = "logy.log";
+
+	public FileLogger(File file) {
+		super();
+	}
 
 	@Override
 	public void log(Object obj) {

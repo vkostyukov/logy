@@ -33,6 +33,7 @@ public class LogyParser implements Parser {
 
 		List<Environment.Tripple> tripples = 
 			new ArrayList<Environment.Tripple>();
+
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 			while (reader.ready()) {
@@ -53,10 +54,10 @@ public class LogyParser implements Parser {
 				}
 			}
 		} catch (IOException ignored) {
-			return Environment.DEFAULT_TRIPPLES;
+			// using defaults
+			// return Environment.DEFAULT_TRIPPLES;
 		}
 
 		return tripples;
 	}
-
 }

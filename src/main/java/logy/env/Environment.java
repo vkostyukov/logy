@@ -20,7 +20,6 @@ package logy.env;
 
 import java.util.*;
 
-import logy.Logy.Level;
 import logy.logger.*;
 
 public abstract class Environment {
@@ -37,19 +36,26 @@ public abstract class Environment {
 		}
 	}
 
-	public static final Collection<Environment.Tripple> DEFAULT_TRIPPLES = 
-		Arrays.asList(
-			new Tripple("*", "format", "%date% %time% %scope% [%level%]: %%%"),
-			new Tripple("*", "level", "info"),
-			new Tripple("*", "logger", "stream:out")
-		);
-
-	public static Environment create(Collection<Environment.Tripple> tripples) {
+	public static Environment fromTripples(
+		Collection<Environment.Tripple> tripples) {
 		return new HashEnvironment(tripples);
 	}
 
-	public abstract String format(String scope);
-	public abstract Level level(String scope);
-	public abstract Logger logger(String scope);
+	protected Collection<Environment.Tripple> tripples;
 
+	public Environment(Collection<Tripple> tripples) {
+		this.tripples = tripples;
+	}
+
+	public String format(String scope) {
+		return Logger.DEFAULT_FORMAT;
+	}
+
+	public Logger.Level level(String scope) {
+		return Logger.DEFAULT_LEVEL;
+	}
+
+	public Logger logger(String scope) {
+		return Logger.DEFAULT_LOGGER; 
+	}
 }

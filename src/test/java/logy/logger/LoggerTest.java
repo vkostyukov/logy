@@ -16,30 +16,17 @@
  * limitations under the License.
  */
 
-package logy.parser;
-
-import java.io.*;
-import java.net.*;
-import java.util.*;
+package logy.logger;
 
 import junit.framework.*;
-import logy.env.*;
 
-public class LogyParserTest extends TestCase {
-	public static final URL URLS[] = {
-		
-	};
+public class LoggerTest extends TestCase {
 
 	public static Test suite() {
-		return new TestSuite(LogyParserTest.class);
+		return new TestSuite(LoggerTest.class);
 	}
-
-	public void testSimple() {
-		URL url = getClass().getClassLoader().getResource("simple.logy");
-		Parser parser = new LogyParser();
-		Collection<Environment.Tripple> tripples = parser.parse(
-			new File(url.getPath())
-		);
-
+	
+	public void testOne() {
+		Logger.fromString("stream:");
 	}
 }

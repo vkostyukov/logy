@@ -20,7 +20,7 @@ package logy.logger;
 
 import java.io.*;
 
-public class StreamLogger extends AbstractLogger implements Logger {
+public class StreamLogger extends Logger {
 
 	private PrintStream stream;
 

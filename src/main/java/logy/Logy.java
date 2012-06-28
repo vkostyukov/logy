@@ -28,10 +28,6 @@ import logy.logger.*;
 import logy.parser.*;
 
 public final class Logy {
-	
-	public static enum Level {
-		NONE, DEBUG, ERROR, WARN, INFO, FINE, DEFAULT
-	}
 
 	private static class IntrusiveObject {
 		
@@ -47,7 +43,7 @@ public final class Logy {
 		}
 	}
 
-	private static Environment env = Environment.create(
+	private static Environment env = Environment.fromTripples(
 		new LogyParser().parse(new File(Parser.DEFAULT_FILENAME)));
 
 	public static Object join(Object ... objs) {
@@ -131,34 +127,34 @@ public final class Logy {
 	}
 
 	public static void debug(Object ... objs) {
-		log(Level.DEBUG, join(objs).toString());
+		log(Logger.Level.DEBUG, join(objs).toString());
 	}
 
 	public static void error(Object ... objs) {
-		log(Level.ERROR, join(objs).toString());
+		log(Logger.Level.ERROR, join(objs).toString());
 	}
 
 	public static void warn(Object ... objs) {
-		log(Level.WARN, join(objs).toString());
+		log(Logger.Level.WARN, join(objs).toString());
 	}
 
 	public static void info(Object ... objs) {
-		log(Level.INFO, join(objs).toString());
+		log(Logger.Level.INFO, join(objs).toString());
 	}
 
 	public static void fine(Object ... objs) {
-		log(Level.FINE, join(objs).toString());
+		log(Logger.Level.FINE, join(objs).toString());
 	}
 
 	public static void log(Object ... objs) {
-		log(Level.DEFAULT, join(objs).toString());
+		log(Logger.Level.DEFAULT, join(objs).toString());
 	}
 
-	private static void log(Level level, String obj) {
+	private static void log(Logger.Level level, String obj) {
 
 		String scope = scope();
 
-		if (level == Level.DEFAULT) {
+		if (level == Logger.Level.DEFAULT) {
 			level = env.level(scope);
 		}
 
