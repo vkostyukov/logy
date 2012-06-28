@@ -18,28 +18,16 @@
 
 package logy.parser;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
-
 import junit.framework.*;
-import logy.env.*;
 
-public class LogyParserTest extends TestCase {
-	public static final URL URLS[] = {
-		
-	};
+public class LogyParserTest extends ParserTest {
+
+	@Override
+	public Parser parser() {
+		return new LogyParser();
+	}
 
 	public static Test suite() {
 		return new TestSuite(LogyParserTest.class);
-	}
-
-	public void testSimple() {
-		URL url = getClass().getClassLoader().getResource("simple.logy");
-		Parser parser = new LogyParser();
-		Collection<Environment.Tripple> tripples = parser.parse(
-			new File(url.getPath())
-		);
-
 	}
 }

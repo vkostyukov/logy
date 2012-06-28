@@ -37,4 +37,9 @@ public class StreamLogger extends Logger {
 	public void newline() {
 		stream.println();
 	}
+
+	@Override
+	public String toString() {
+		return "stream:" + ((stream == System.out) ? "out" : "err"); 
+	}
 }

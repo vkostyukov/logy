@@ -18,8 +18,38 @@
 
 package logy.parser;
 
+import java.io.*;
+import java.net.*;
+import java.util.*;
+
 import junit.framework.*;
+import logy.env.*;
 
-public class ParserTest {
+public abstract class ParserTest extends TestCase {
 
+	public abstract Parser parser();
+
+	public void testEmpty() {
+		
+	}
+
+	public void testBroken() {
+		
+	}
+
+	public void testSimple() {
+		URL url = getClass().getClassLoader().getResource("simple.logy");
+		Parser parser = new LogyParser();
+		Collection<Environment.Tripple> tripples = parser.parse(
+			new File(url.getPath())
+		);
+	}
+	
+	public void testMedium() {
+		
+	}
+	
+	public void testHard() {
+		
+	}
 }

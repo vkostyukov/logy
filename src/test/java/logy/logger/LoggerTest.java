@@ -25,8 +25,18 @@ public class LoggerTest extends TestCase {
 	public static Test suite() {
 		return new TestSuite(LoggerTest.class);
 	}
-	
-	public void testOne() {
-		Logger.fromString("stream:");
+
+	public void testFromString() {
+		assertEquals("stream:out", Logger.fromString("stream:").toString());
+		assertEquals("stream:out", Logger.fromString("stream").toString());
+		assertEquals("stream:out", Logger.fromString("stream:out").toString());
+		assertEquals("stream:err", Logger.fromString("stream:err").toString());
+
+		assertEquals("file:test.log", 
+			Logger.fromString("file:test.log").toString());
+		assertEquals("file:" + FileLogger.DEFAULT_FILENAME, 
+			Logger.fromString("file").toString());
+		assertEquals("file:" + FileLogger.DEFAULT_FILENAME, 
+				Logger.fromString("file:").toString());
 	}
 }

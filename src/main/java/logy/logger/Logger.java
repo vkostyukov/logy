@@ -35,14 +35,14 @@ public abstract class Logger {
 
 	public static final Level DEFAULT_LEVEL = Level.INFO;
 
-	private static final Pattern PATTERN = Pattern.compile("(\\w+):?.*");
+	private static final Pattern PATTERN = Pattern.compile("(\\w+):?(.*)");
 	
 	public static Logger fromString(String string) {
 		// TODO: I can write it better!
 		Matcher matcher = PATTERN.matcher(string);
 		if (matcher.matches()) {
 			if (matcher.group(1).equals("stream")) {
-				if (matcher.groupCount() > 2) {
+				if (matcher.groupCount() > 1) {
 					if (matcher.group(2).equals("err")) {
 						return new StreamLogger(System.err);
 					} else if (matcher.group(2).equals("out")) {
@@ -54,7 +54,7 @@ public abstract class Logger {
 					return DEFAULT_LOGGER;
 				}
 			} else if (matcher.group(1).equals("file")) {
-				if (matcher.groupCount() > 2) {
+				if (matcher.groupCount() > 1 && !matcher.group(2).isEmpty()) {
 					return new FileLogger(new File(matcher.group(2)));
 				} else {
 					return new FileLogger(
