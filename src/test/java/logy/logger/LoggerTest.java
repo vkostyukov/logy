@@ -18,9 +18,29 @@
 
 package logy.logger;
 
+import java.util.*;
+
 import junit.framework.*;
 
 public class LoggerTest extends TestCase {
+
+	public static class IntrusiveLogger extends Logger {
+		private Object obj;
+
+		@Override
+		public void log(Object obj) {
+			this.obj = obj;
+		}
+
+		@Override
+		public void newline() {
+			// do nothing
+		}
+
+		public Object obj() {
+			return obj;
+		}
+	}
 
 	public static Test suite() {
 		return new TestSuite(LoggerTest.class);
@@ -38,5 +58,25 @@ public class LoggerTest extends TestCase {
 			Logger.fromString("file").toString());
 		assertEquals("file:" + FileLogger.DEFAULT_FILENAME, 
 				Logger.fromString("file:").toString());
+	}
+
+	public void testLog() {
+		IntrusiveLogger logger = new IntrusiveLogger();
+		Map<String, String> context = new HashMap<String, String>();
+		context.put("a", "A");
+		context.put("b", "B");
+		context.put("c", "C");
+		context.put("aaa", "A");
+		context.put("bbb", "B");
+		context.put("ccc", "C");
+
+		logger.log("", "%a%%b%%c%", context);
+		assertEquals("ABC", logger.obj());
+
+		logger.log("", "%aaa%%a%A", context);
+		assertEquals("AAA", logger.obj());
+
+		logger.log("message", "%aaa%b%c%bb%b% %%%", context);
+		assertEquals("AbCbbB message", logger.obj());
 	}
 }
