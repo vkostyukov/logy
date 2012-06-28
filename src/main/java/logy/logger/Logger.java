@@ -25,7 +25,7 @@ import java.util.regex.*;
 public abstract class Logger {
 
 	public static enum Level {
-		NONE, DEBUG, ERROR, WARN, INFO, FINE, DEFAULT
+		DEBUG, ERROR, WARN, INFO, FINE, DEFAULT, NONE
 	}
 
 	public static final Logger DEFAULT_LOGGER = new StreamLogger(System.out);

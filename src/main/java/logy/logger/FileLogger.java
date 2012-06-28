@@ -24,36 +24,39 @@ public class FileLogger extends Logger {
 
 	public static final String DEFAULT_FILENAME = "logy.log";
 
-	private BufferedWriter writter;
-
-	private String path;
+	private File file;
 	
 	public FileLogger(File file) {
-		try {
-			writter = new BufferedWriter(new FileWriter(file));
-		} catch (IOException ignored) {
-			
-		}
-
-		this.path = file.getName();
+		this.file = file;
 	}
 
 	@Override
 	public void log(Object obj) {
 		try {
+			BufferedWriter writter = new BufferedWriter(
+				new FileWriter(file, true));
 			writter.write(obj.toString());
-		} catch (IOException ex) {}
+			writter.flush();
+			writter.close();
+		} catch (IOException ignored) {
+			System.err.println(ignored);
+		}
 	}
 
 	@Override
 	public void newline() {
 		try {
+			BufferedWriter writter = new BufferedWriter(
+				new FileWriter(file, true));
 			writter.newLine();
-		} catch (IOException ex) {}
+			writter.close();
+		} catch (IOException ignored) {
+			System.err.println(ignored);
+		}
 	}
 
 	@Override
 	public String toString() {
-		return "file:" + path;
+		return "file:" + file.getName();
 	}
 }

@@ -261,6 +261,7 @@ public final class Logy {
 			result.put("class", matcher.group(1));
 			result.put("method", matcher.group(2));
 		} else {
+			// TODO: it looks weird 
 			throw new IllegalStateException(
 				"It's impossible to have method w/o a class!");
 		}

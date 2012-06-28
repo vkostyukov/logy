@@ -85,7 +85,9 @@ public class RegexEnvironment extends Environment {
 	public String format(String scope) {
 		for (Pattern pattern: patterns) {
 			if (pattern.matcher(scope).matches()) {
-				return formats.get(pattern.pattern());
+				if (formats.containsKey(pattern.pattern())) {
+					return formats.get(pattern.pattern());
+				}
 			}
 		}
 		return super.format(scope);
@@ -95,7 +97,9 @@ public class RegexEnvironment extends Environment {
 	public Level level(String scope) {
 		for (Pattern pattern: patterns) {
 			if (pattern.matcher(scope).matches()) {
-				return levels.get(pattern.pattern());
+				if(levels.containsKey(pattern.pattern())) {
+					return levels.get(pattern.pattern());
+				}
 			}
 		}
 		return super.level(scope);
@@ -105,7 +109,9 @@ public class RegexEnvironment extends Environment {
 	public Logger logger(String scope) {
 		for (Pattern pattern: patterns) {
 			if (pattern.matcher(scope).matches()) {
-				return loggers.get(pattern.pattern());
+				if (loggers.containsKey(pattern.pattern())) {
+					return loggers.get(pattern.pattern());
+				}
 			}
 		}
 		return super.logger(scope);
