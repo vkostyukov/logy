@@ -60,6 +60,7 @@ public abstract class Environment {
 		return Logger.DEFAULT_LEVEL;
 	}
 
+	// TODO: make it Logger[] 
 	public Logger logger(String scope) {
 		return Logger.DEFAULT_LOGGER; 
 	}

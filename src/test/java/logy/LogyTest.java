@@ -32,13 +32,18 @@ public class LogyTest extends TestCase {
 
 	public void testContextAndScope() {
 		Map<String, String> context = context(scope());
-		assertEquals(context.get("scope"), "sun.reflect.NativeMethodAccessorImpl.invoke");
-		assertEquals(context.get("class"), "sun.reflect.NativeMethodAccessorImpl");
+		assertEquals(context.get("scope"), 
+			"sun.reflect.NativeMethodAccessorImpl.invoke");
+		assertEquals(context.get("class"), 
+			"sun.reflect.NativeMethodAccessorImpl");
 		assertEquals(context.get("method"), "invoke");
 	}
 
-	public void testLog() {
-		fine("message");
-		info("message2");
+	public void testQuote() {
+		int arr[] = {1, 2, 3, 4};
+		info("There is no", quote(5), "in array", quote(arr));
+		
+		assertEquals("\"[1, 2, 3, 4]\"", export(quote(arr)));
+		assertEquals("\"1\" \"2\" \"3\" \"4\"", export(quote(scalar(arr))));
 	}
 }

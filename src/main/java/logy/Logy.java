@@ -77,6 +77,8 @@ public final class Logy {
 			return Arrays.toString((int[]) obj);
 		} else if (obj instanceof double[]) {
 			return Arrays.toString((double[]) obj);
+		} else if (obj instanceof float[]) {
+			return Arrays.toString((float[]) obj);
 		} else if (obj instanceof boolean[]) {
 			return Arrays.toString((boolean[]) obj);
 		} else if (obj instanceof char[]) {
@@ -119,35 +121,100 @@ public final class Logy {
 	}
 
 	public static Object[] scalar(Object obj) {
-		return (Object[]) obj;
+		// TODO: add IntrusiveObject here
+		if (obj instanceof int[]) {
+			int arr[] = (int[]) obj;
+			Integer[] result = new Integer[arr.length];
+			for (int i = 0; i < arr.length; i++) {
+				result[i] = arr[i];
+			}
+			return result;
+		} else if (obj instanceof double[]) {
+			double dobj[] = (double[]) obj;
+			Double[] result = new Double[dobj.length];
+			for (int i = 0; i < dobj.length; i++) {
+				result[i] = dobj[i];
+			}
+			return result;
+		} else if (obj instanceof float[]) {
+			float arr[] = (float[]) obj;
+			Float[] result = new Float[arr.length];
+			for (int i = 0; i < arr.length; i++) {
+				result[i] = arr[i];
+			}
+			return result;
+		} else if (obj instanceof boolean[]) {
+			boolean arr[] = (boolean[]) obj;
+			Boolean[] result = new Boolean[arr.length];
+			for (int i = 0; i < arr.length; i++) {
+				result[i] = arr[i];
+			}
+			return result;
+		} else if (obj instanceof char[]) {
+			char arr[] = (char[]) obj;
+			Character[] result = new Character[arr.length];
+			for (int i = 0; i < arr.length; i++) {
+				result[i] = arr[i];
+			}
+			return result;
+		} else if (obj instanceof byte[]) {
+			byte arr[] = (byte[]) obj;
+			Byte[] result = new Byte[arr.length];
+			for (int i = 0; i < arr.length; i++) {
+				result[i] = arr[i];
+			}
+			return result;
+		} else if (obj instanceof long[]) {
+			long arr[] = (long[]) obj;
+			Long[] result = new Long[arr.length];
+			for (int i = 0; i < arr.length; i++) {
+				result[i] = arr[i];
+			}
+			return result;
+		} else if (obj instanceof short[]) {
+			short arr[] = (short[]) obj;
+			Short[] result = new Short[arr.length];
+			for (int i = 0; i < arr.length; i++) {
+				result[i] = arr[i];
+			}
+			return result;
+		} else if (obj instanceof Object[]) {
+			return (Object[]) obj;
+		} else {
+			return new Object[] { obj };
+		}
 	}
 
 	public static Object array(Object obj[]) {
 		return (Object) obj;
 	}
 
+	public static String export(Object ... objs) {
+		return join(objs).toString();
+	}
+
 	public static void debug(Object ... objs) {
-		log(Logger.Level.DEBUG, join(objs).toString());
+		log(Logger.Level.DEBUG, export(objs));
 	}
 
 	public static void error(Object ... objs) {
-		log(Logger.Level.ERROR, join(objs).toString());
+		log(Logger.Level.ERROR, export(objs));
 	}
 
 	public static void warn(Object ... objs) {
-		log(Logger.Level.WARN, join(objs).toString());
+		log(Logger.Level.WARN, export(objs));
 	}
 
 	public static void info(Object ... objs) {
-		log(Logger.Level.INFO, join(objs).toString());
+		log(Logger.Level.INFO, export(objs));
 	}
 
 	public static void fine(Object ... objs) {
-		log(Logger.Level.FINE, join(objs).toString());
+		log(Logger.Level.FINE, export(objs));
 	}
 
 	public static void log(Object ... objs) {
-		log(Logger.Level.DEFAULT, join(objs).toString());
+		log(Logger.Level.DEFAULT, export(objs));
 	}
 
 	private static void log(Logger.Level level, String obj) {
