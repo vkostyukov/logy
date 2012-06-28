@@ -2,3 +2,15 @@
 # Copyright 2012, Vladimir Kostyukov: http://vkostyukov.ru 
 # Logy's hard configuration file: https://github.com/vkostyukov/logy
 #
+
+format@=%date%%%scope% %%%
+format@a.*= %date% % %%%
+
+# loggers (in-body comment)
+logger@=stream:err
+logger@a.*.c=stream
+logger@a.b.*=file:test.log
+
+# levels
+level@a.b.*.c.*=NONE
+level@*=WARN

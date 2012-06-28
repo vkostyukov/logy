@@ -30,8 +30,22 @@ public abstract class ParserTest extends TestCase {
 	public abstract Parser parser();
 
 	public void testEmpty() {
-		
+		URL url = getClass().getClassLoader().getResource("empty.logy");
+		Parser parser = parser();
+
+		Collection<Environment.Tripple> tripples = parser.parse(
+			new File(url.getPath()));
+		assertEquals(0, tripples.size());
 	}
+
+	public void testLost() {
+		Parser parser = parser();
+
+		Collection<Environment.Tripple> tripples = parser.parse(
+			new File("lost.logy"));
+		assertEquals(0, tripples.size());
+	}
+	
 
 	public void testBroken() {
 		
@@ -39,17 +53,60 @@ public abstract class ParserTest extends TestCase {
 
 	public void testSimple() {
 		URL url = getClass().getClassLoader().getResource("simple.logy");
-		Parser parser = new LogyParser();
+		Parser parser = parser();
+
 		Collection<Environment.Tripple> tripples = parser.parse(
 			new File(url.getPath())
 		);
+		assertEquals(3, tripples.size());
+
+		Set<String> dump = dump(tripples);
+		assertTrue(dump.contains("level@*=debug"));
+		assertTrue(dump.contains("format@*=%date% %%%"));
+		assertTrue(dump.contains("logger@*=stream:err"));
 	}
 	
 	public void testMedium() {
-		
+		URL url = getClass().getClassLoader().getResource("medium.logy");
+		Parser parser = parser();
+
+		Collection<Environment.Tripple> tripples = parser.parse(
+			new File(url.getPath())
+		);
+		assertEquals(5, tripples.size());
+
+		Set<String> dump = dump(tripples);
+		assertTrue(dump.contains("format@*=%class% %%%"));
+		assertTrue(dump.contains("logger@*=stream:out"));
+		assertTrue(dump.contains("logger@a.*=stream:err"));
+		assertTrue(dump.contains("level@a.b.*=info"));
+		assertTrue(dump.contains("level@*=debug"));
 	}
 	
 	public void testHard() {
-		
+		URL url = getClass().getClassLoader().getResource("hard.logy");
+		Parser parser = parser();
+
+		Collection<Environment.Tripple> tripples = parser.parse(
+			new File(url.getPath())
+		);
+		assertEquals(7, tripples.size());
+
+		Set<String> dump = dump(tripples);
+		assertTrue(dump.contains("format@*=%date%%%scope% %%%"));
+		assertTrue(dump.contains("format@a.*= %date% % %%%"));
+		assertTrue(dump.contains("logger@*=stream:err"));
+		assertTrue(dump.contains("logger@a.*.c=stream"));
+		assertTrue(dump.contains("logger@a.b.*=file:test.log"));
+		assertTrue(dump.contains("level@a.b.*.c.*=NONE"));
+		assertTrue(dump.contains("level@*=WARN"));
+	}
+	
+	private Set<String> dump(Collection<Environment.Tripple> tripples) {
+		Set<String> result = new HashSet<String>();
+		for (Environment.Tripple tripple: tripples) {
+			result.add(tripple.toString());
+		}
+		return result;
 	}
 }

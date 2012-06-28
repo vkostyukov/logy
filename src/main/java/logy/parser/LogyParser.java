@@ -34,12 +34,13 @@ public class LogyParser implements Parser {
 		List<Environment.Tripple> tripples = 
 			new ArrayList<Environment.Tripple>();
 
+		// TODO: change exception logic
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 			while (reader.ready()) {
 				String line = reader.readLine();
 
-				if (line.matches("^#.*")) {
+				if (line.matches("^#.*$") || line.matches("^\\s*$")) {
 					continue;
 				}
 
@@ -54,8 +55,6 @@ public class LogyParser implements Parser {
 				}
 			}
 		} catch (IOException ignored) {
-			// using defaults
-			// return Environment.DEFAULT_TRIPPLES;
 		}
 
 		return tripples;

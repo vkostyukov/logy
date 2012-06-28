@@ -25,6 +25,7 @@ import logy.logger.*;
 public abstract class Environment {
 
 	public static final class Tripple {
+
 		public final String scope;
 		public final String key;
 		public final String value;
@@ -33,6 +34,10 @@ public abstract class Environment {
 			this.scope = scope;
 			this.key = key;
 			this.value = value;
+		}
+
+		public String toString() {
+			return key + "@" + scope + "=" + value;
 		}
 	}
 

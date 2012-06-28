@@ -2,3 +2,9 @@
 # Copyright 2012, Vladimir Kostyukov: http://vkostyukov.ru 
 # Logy's medium configuration file: https://github.com/vkostyukov/logy
 #
+
+format@=%class% %%%
+logger@=stream:out
+logger@a.*=stream:err
+level@a.b.*=info
+level@*=debug
