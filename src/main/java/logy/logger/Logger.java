@@ -25,7 +25,7 @@ import java.util.regex.*;
 public abstract class Logger {
 
 	public static enum Level {
-		DEBUG, ERROR, WARN, INFO, FINE, DEFAULT, NONE
+		DEBUG, INFO, FINE, WARN, ERROR, DEFAULT, NONE
 	}
 
 	public static final Logger DEFAULT_LOGGER = new StreamLogger(System.out);
@@ -33,7 +33,7 @@ public abstract class Logger {
 	public static final String DEFAULT_FORMAT = 
 		"%date% %time% %scope% [%level%] :: %%%";
 
-	public static final Level DEFAULT_LEVEL = Level.INFO;
+	public static final Level DEFAULT_LEVEL = Level.WARN;
 
 	private static final Pattern PATTERN = Pattern.compile("(\\w+):?(.*)");
 	
